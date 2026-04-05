@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-dark-void: #131418;
+  --color-lemony-yellow: #F7FF72;
+}
+
+body {
+  background-color: var(--color-dark-void);
+  color: white;
+  font-family: var(--font-sans);
+}
+
+/* Cyber-brutalist utilities */
+@layer utilities {
+  .brutal-border {
+    @apply border-2 border-lemony-yellow;
+  }
+  .brutal-shadow {
+    box-shadow: 4px 4px 0px 0px var(--color-lemony-yellow);
+  }
+  .brutal-shadow-white {
+    box-shadow: 4px 4px 0px 0px #ffffff;
+  }
+  .brutal-shadow-hover:hover {
+    box-shadow: 6px 6px 0px 0px var(--color-lemony-yellow);
+    transform: translate(-2px, -2px);
+  }
+}
