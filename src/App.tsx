@@ -32,7 +32,6 @@ const SystemBar = () => (
         </div>
       </div>
       <div className="flex items-center gap-4">
-        <span className="hidden md:inline text-white/50">{new Date().toISOString().split('T')[0]}</span>
         <button className="bg-lemony-yellow text-dark-void px-4 py-1 font-bold hover:bg-white transition-colors">
           INIT_DEPLOYMENT
         </button>
