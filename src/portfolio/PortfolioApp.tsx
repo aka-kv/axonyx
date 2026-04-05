@@ -100,7 +100,7 @@ const FOUNDERS = [
 ];
 
 const VISION = {
-  why: "We are building the 'Emergent for AI Agents'—an infrastructure platform that transforms any static app or database into an autonomous workforce in seconds. We believe the future of software isn't in chat interfaces, but in giving every piece of software its own 'autonomous brain' to replace manual human operators.",
+  why: "We are building AI agents on the fly—an infrastructure platform that transforms any static app or database into an autonomous workforce in seconds. We believe the future of software isn't in chat interfaces, but in giving every piece of software its own 'autonomous brain' to replace manual human operators.",
   what: "We are accelerating the shift toward an agent-first future by generating fully functional Model Context Protocol (MCP) servers on the fly. Our engine takes natural language intent or raw API documentation, dynamically compiles a production-ready MCP server, and instantly deploys a secure, sandboxed AI agent."
 };
 
@@ -226,7 +226,7 @@ export default function App() {
     {
       id: 'welcome',
       role: 'assistant',
-      content: "### SYSTEM INITIALIZED\n\nWelcome to the **VibeConn 2026** Founders Portfolio. We are building the **Emergent for AI Agents**—infrastructure that transforms static software into an autonomous workforce.\n\nWhat would you like to explore?",
+      content: "Welcome to the team Axonyx's portfolio, get to know us better. We have given some template questions, if you want to know more, ask more.",
       timestamp: new Date(),
     }
   ]);
@@ -273,29 +273,31 @@ export default function App() {
         dangerouslyAllowBrowser: true
       });
       const systemInstruction = `
-        You are the VibeConn 2026 Portfolio Assistant. Your tone is professional, technical, and aligned with a "cyber-brutalist" aesthetic.
-        You represent the founders: Krishna Manu, Keerthivasan T., and Nitin S.
-        
-        FOUNDER DATA:
-        ${JSON.stringify(FOUNDERS, null, 2)}
-        
-        VISION:
-        ${JSON.stringify(VISION, null, 2)}
-        
-        TECH STACK:
-        ${TECH_SPECS.join('\n')}
-        
-        MISSION: "Emergent for AI Agents" - infrastructure platform for autonomous workforce.
-        
-        RULES:
-        1. STRONGLY emphasize visual hierarchy. Use headings (##, ###), bulleted lists (-), bold text (**bold**), and blockquotes (>) to visually separate ideas.
-        2. Keep responses concise but highly structured (avoid giant text blocks).
-        3. If asked about founders, mention their specific roles and expertise using bolded keywords.
-        4. If asked about projects, highlight the technical achievements with bullet points.
-        5. Always maintain the "VibeConn 2026" and "Emergent" branding natively in the response.
-        6. If the user asks something unrelated, steer them back to the portfolio or vision.
-      `;
+          You are an information retrieval interface for the Axonyx team and our VibeConn 2026 Portfolio. Your tone is strictly factual, concise, technical, and objective.
+          Do NOT act like a chatbot. Do NOT ask "How can I help you?" or "What would you like to explore?". Respond directly to the query with ONLY the requested factual data.
 
+          FOUNDER DATA:
+          ${JSON.stringify(FOUNDERS, null, 2)}
+
+          VISION & IDENTITY:
+          Company/Team: Axonyx
+          Event/Context: VibeConn 2026
+          About us: We are Team Axonyx, presenting our vision at VibeConn 2026.
+          ${JSON.stringify(VISION, null, 2)}
+
+          TECH STACK:
+          ${TECH_SPECS.join('\n')}
+
+          MISSION: "Building AI agents on the fly" - infrastructure platform for autonomous workforce.
+
+          RULES:
+          1. Output information clearly using simple bullet lists and paragraphs. Do not overuse bold text.
+          2. Keep the design minimalist. Use standard headings (##, ###) only when grouping major sections.
+          3. Be extremely brief. Do not add conversational fluff or polite openings/closings.
+          4. If asked about founders, neatly list their name as a heading, followed by their role and a quick summary of their top projects.
+          5. Use simple, direct English. Avoid jargon unless it is in the data schema.
+          6. If asked about Axonyx, explain that we are the team building AI agents on the fly. If asked about VibeConn, explain that it is the event we are participating in to showcase our vision for autonomous workforces.
+          7. If the user asks something completely unrelated to Axonyx, Vibeconn, the founders, tech stack, or our vision, reply ONLY with: "Query out of bounds. Please request data on Axonyx, Founders, Projects, Tech Stack, or Vision."        `;
       const response = await openai.chat.completions.create({
         model: "gpt-5.4-nano",
         messages: [
@@ -403,13 +405,13 @@ export default function App() {
                             return <li className={cn("pl-1", message.role === 'user' ? 'text-black opacity-80' : 'text-white/80')}>{props.children}</li>;
                           }
                           return (
-                            <li className="flex items-start gap-4">
-                              <div className={cn("w-[10px] h-[10px] mt-1.5 flex-shrink-0", message.role === 'user' ? 'bg-black brutal-shadow-[2px_2px_0_0_#eab30860]' : 'bg-lemony-yellow brutal-shadow-[2px_2px_0_0_#ffffff20]')} />
-                              <div className={cn("leading-relaxed max-w-[90%]", message.role === 'user' ? 'text-black opacity-80' : 'text-white/80')}>{props.children}</div>
+                              <li className="flex items-start gap-3">
+                                <div className={cn("w-1.5 h-1.5 mt-2 flex-shrink-0 rounded-sm", message.role === 'user' ? 'bg-black' : 'bg-lemony-yellow')} />
+                                <div className={cn("leading-relaxed", message.role === 'user' ? 'text-black opacity-80' : 'text-white/80')}>{props.children}</div>
                             </li>
                           );
                         },
-                        strong: ({ node, ...props }) => <strong className={cn("font-bold px-1 py-0.5 rounded border", message.role === 'user' ? 'text-black bg-black/5 border-black/10' : 'text-white bg-white/5 border-white/10')} {...props} />,
+                          strong: ({ node, ...props }) => <strong className={cn("font-bold tracking-tight", message.role === 'user' ? 'text-black' : 'text-white')} {...props} />,
                         blockquote: ({ node, ...props }) => <blockquote className={cn("border-l-2 border-lemony-yellow pl-4 italic my-6 py-2", message.role === 'user' ? 'text-black/60 bg-black/5' : 'text-white/60 bg-black/20')} {...props} />,
                         code: ({ node, inline, ...props }: any) => 
                           inline ? (
@@ -493,7 +495,7 @@ export default function App() {
                   onKeyDown={(e) => e.key === 'Enter' && handleSend(inputValue)}
                   placeholder="INPUT_RAW_INTENT..."
                   disabled={isTyping}
-                  className="flex-1 bg-transparent border-none focus:ring-0 py-4 font-mono text-sm text-white placeholder:text-white/20 disabled:opacity-50"
+                    className="flex-1 bg-transparent border-none outline-none focus:outline-none focus:ring-0 py-4 font-mono text-sm text-white placeholder:text-white/20 disabled:opacity-50"
                 />
                 <button
                   onClick={() => handleSend(inputValue)}
